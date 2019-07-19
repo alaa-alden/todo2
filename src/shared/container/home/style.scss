@@ -1,0 +1,12 @@
+.Home {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 8fr 2fr 8fr;
+  grid-template-areas: ". .  ." ".  word   ." ".  . .";
+  h1 {
+    text-align: center;
+    grid-area: word
+  }
+}
