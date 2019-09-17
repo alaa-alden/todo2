@@ -9,8 +9,8 @@ class Home extends Component {
   render() {
     return (
       <div className={styles.Home}>
-          <List/>
-          <Add/>
+        <List id='list' />
+        <Add className={styles.add} />
       </div>
     )
   }

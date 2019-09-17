@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setItem } from '../../../action'
+import { add_item } from '../../../action'
 class form extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +15,8 @@ class form extends Component {
     }
 
     handleSubmit(event) {
-        this.props.setitem(this.state.item)
+        // call action
+        this.props.add_item(this.state.item)
         this.setState({ item: "" });
         event.preventDefault();
 
@@ -31,12 +32,11 @@ class form extends Component {
     }
 }
 const mapDispatchToProps=dispatch=>({
-    setitem:(item)=>{
+    add_item:(item)=>{
         dispatch(
-            setItem(item)
+            add_item(item)
         )
     }
 })
-const mapSTP=state=>({
-})
-export default connect(mapSTP,mapDispatchToProps)(form)
+
+export default connect(state=>({}),mapDispatchToProps)(form)

@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { deleteItem } from '../../../action'
+import { deleteItem,fetch_todo } from '../../../action'
 import { Link } from 'react-router-dom'
+
 export class List extends Component {
+    componentDidMount(){
+        this.props.fetch_todo()
+    }
     handleClick(key){
-        this.props.DI(key)
+        this.props.delete_todo(key)
         this.forceUpdate()
     }
     PrintItems() {
-        return this.props.list.map((item, key) =>
-            <li key={key}>
-                <Link to={`/update/${key}`}>{item}</Link>
-                <button onClick={()=>this.handleClick(key)} >X</button>
+        return Object.keys(this.props.list).map((val, index) =>
+            <li key={index}>
+                <Link to={`/update/${this.props.list[val]._id}`}>{this.props.list[val].task}</Link>
+                <button onClick={() => this.handleClick(this.props.list[val]._id)} >X</button>
             </li>)
     }
-    render() {        
+    render() {   
+        
+        
+        
         return (
             <ul>
                 {this.PrintItems()}
@@ -23,13 +30,10 @@ export class List extends Component {
     }
 }
 const mapStateToProps = state =>    ({
-        list: state.list.list
+        list: state.store.list
     })
-const mapDispatchToProps = dispatch => ({
-    DI: key => {
-        dispatch(
-            deleteItem(key)
-        )
-    }
+const mapDispatchToProps=dispatch=>({
+    fetch_todo:()=>dispatch(fetch_todo()),
+    delete_todo:(key)=>dispatch(deleteItem(key))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(List)
