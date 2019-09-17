@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetch_todo } from '../../action'
+// import { fetch_todo } from '../../action'
 // import { updateItem } from '../../action'
 let key;
 class Update extends Component {
@@ -10,7 +10,7 @@ class Update extends Component {
         key = this.props.match.params.id
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.props.fetch_todo()
+        // this.props.fetch_todo()
     }
     state = {
         thing: ""
@@ -54,13 +54,12 @@ const mapStateToProps = state => ({
     list: state.store.list
 })
 const mapDispatchToProps = dispatch => ({
-    fetch_todo: () => dispatch(fetch_todo()),
-    
+    // fetch_todo: () => dispatch(fetch_todo()),
     UpdateItem: (item, key) => {
         dispatch({
             type: 'update_item', item, key
         })
-    },
+    }
 })
 export default connect(mapStateToProps
     , mapDispatchToProps
