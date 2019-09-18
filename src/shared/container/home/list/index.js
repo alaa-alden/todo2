@@ -16,10 +16,7 @@ export class List extends Component {
                 <button onClick={() => this.handleClick(this.props.list[val]._id)} >X</button>
             </li>)
     }
-    render() {   
-        
-        
-        
+    render() {  
         return (
             <ul>
                 {this.PrintItems()}
@@ -27,9 +24,11 @@ export class List extends Component {
         )
     }
 }
-const mapStateToProps = state =>    ({
+const mapStateToProps = state =>{
+    console.log(state.store)
+    return {
         list: state.store.list
-    })
+    }}
 const mapDispatchToProps=dispatch=>({
     delete_todo:(key)=>dispatch(deleteItem(key))
 })

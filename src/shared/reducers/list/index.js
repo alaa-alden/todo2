@@ -6,8 +6,8 @@ const reducerList = (state = defaultItem, action) => {
   switch (action.type) {
     //  fetch'reducer when whole todos comes from server
     case 'fetch_todo':
-      return {...state,list:action.data}
-    // add reduce when you send todo to server then save on database then save on redux
+      return {state,list:action.data}
+    // ! add reduce when you send todo to server then save on database then save on redux
     case 'add_item':
       handle=Object.values(state.list)
       handle.push(action.todo.data)
@@ -23,7 +23,9 @@ const reducerList = (state = defaultItem, action) => {
       // work here
     case "update_item":
       state.list[action.key]=action.item
-      return {...state,list:state.list}
+      const data={...state}
+      data.list[action.key]=action.item
+      return {state:data,list:state.list}
       
     default:
       return state
