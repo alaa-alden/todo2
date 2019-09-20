@@ -4,37 +4,54 @@ import { connect } from 'react-redux'
 class Update extends Component {
     constructor(props) {
         super(props)
-        const id = this.props.match.params.id
-        console.log(this.props.list)
-        let thing=this.props.list.find(obj=>obj._id==id)
-        // let thing='ala'
+        //init update's state 
         this.state = {
-            thing: thing || ""
+            list: {},
+            thing:null
         }
     }
-    handleChange=event=>this.setState({ thing: event.target.value })
-    
-    handleSubmit=event=>{
+    componentDidUpdate(nextProps, nextState) {
+        if (this.state.list != nextProps.list && this.setState) {
+            this.setState({
+                list: nextProps.list
+            })
+        }
+        if (Object.keys(this.state.list).length > 0 && !this.state.thing) {
+            let handleList = this.state.list
+            for (let key in handleList) {
+                if (handleList[key]._id == this.props.match.params.id) {
+                    this.setState({ thing: handleList[key].task })
+                    break
+                }
+            }
+        }
+    }
+    handleChange = event => this.setState({ thing: event.target.value })
+
+    handleSubmit = event => {
         event.preventDefault()
-        const key=this.props.match.params.id
-        // toDo ... i have info and i want to save the update of item ,,,,,, but how 
-        this.props.UpdateItem(this.state.thing, key)
+        const {id} = this.props.match.params
+        // toDo ... i have info and i want to save the update of item ,,,,,, but how
+        this.props.UpdateItem(this.state.thing, id)
         this.props.history.push(`/`)
     }
     render() {
-        console.log(this.props.list)
-        return (
-            <div>
-                <Link to="/">home</Link>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.thing} onChange={this.handleChange} />
-                    <input type='submit' value='Click me ...' />
-                </form>
-            </div>
+        if (this.state.thing)
+            return (
+                <div>
+                    <Link to="/">home</Link>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="text" value={this.state.thing} onChange={this.handleChange} />
+                        <input type='submit' value='Click me ...' />
+                    </form>
+                </div>
+            )
+        else return (
+            <Link to='/'>return</Link>
         )
     }
 }
-const mapStateToProps = state =>({ list:state.store.list})
+const mapStateToProps = state => ({ list: state.store.list })
 const mapDispatchToProps = dispatch => ({
     UpdateItem: (item, key) => {
         dispatch({
@@ -42,6 +59,28 @@ const mapDispatchToProps = dispatch => ({
         })
     }
 })
-export default connect(mapStateToProps
-    , mapDispatchToProps
-)(Update)
+export default connect(mapStateToProps, mapDispatchToProps)(Update)
+
+
+
+
+
+
+/*
+
+
+
+
+    render(){
+              return (
+                <div>
+                    <Link to="/">home</Link>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="text" value={this.state.thing} onChange={this.handleChange} />
+                        <input type='submit' value='Click me ...' />
+                    </form>
+                </div>
+            )
+
+    }
+})*/

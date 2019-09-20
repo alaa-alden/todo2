@@ -1,6 +1,6 @@
 import React from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom'
-import {connect}from 'react-redux'
+import { withRouter,BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { fetch_todo } from '../../action'
 import {
   Home,
@@ -14,16 +14,15 @@ class Router extends React.PureComponent {
   }
   render() {
     return (
-      <div>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/update/:id" component={update}/>
+          <Route exact path="/update/:id" component={update} />
+          <Redirect from='*' to='/' />
         </Switch>
-      </div>
     )
   }
 }
-const mapDispatchToProps=dispatch=>({
+const mapDispatchToProps = dispatch => ({
   fetch_todo: () => dispatch(fetch_todo()),
 })
-export default withRouter(connect(null,mapDispatchToProps)(Router))
+export default withRouter(connect(null, mapDispatchToProps)(Router))
